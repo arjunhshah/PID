@@ -1,15 +1,19 @@
 #include "PID.h"
 #include "vex.h"
 
-void PID(double target, double minimumSpeed, double maximumSpeed, double maxIntegral, double tolerance){
+void PID(double target, double maxIntegral, double tolerance){
   
-    //Initialize remaining variables
+  //Initialize remaining variables
   double error = target;
 
   double derivative = 0;
   double integral = 0;
   double lastError = error;
   double total = 0;
+
+  double kP = 0;
+  double kI = 0;
+  double kD = 0;
 
   //Main loop, when the robot is more than the desired distance from the target
   while(/*Condition here*/){
