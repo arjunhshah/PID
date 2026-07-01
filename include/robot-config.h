@@ -8,6 +8,7 @@ extern motor LeftBack;
 extern motor RightFront;
 extern motor RightMiddle;
 extern motor RightBack;
+extern inertial inertialSensor;
 
 extern controller Controller;
 

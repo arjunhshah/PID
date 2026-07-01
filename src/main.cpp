@@ -11,11 +11,25 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include"autonSelector.h"
+#include"PID.h"
 
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
+
+void inertialSensorCalibration(){
+  inertialSensor.calibrate();
+  Controller.Screen.print("Calibration Started");
+  while (inertialSensor.isCalibrating()){
+    wait(10, msec);
+
+  }
+  Controller.Screen.clearScreen();
+  Controller.Screen.print("Calibration");
+  
+}
 
 // define your global instances of motors and other devices here
 
@@ -29,13 +43,17 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void pre_auton(void) {
+//void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
-  vexcodeInit();
+//   vexcodeInit();
+//   inertialSensorCalibration();
+  
 
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
-}
+//   autonSelector();
+
+//   // All activities that occur before the competition starts
+//   // Example: clearing encoders, setting servo positions, ...
+// }
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -48,6 +66,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  PID(45, 200, 0.5);
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -84,12 +103,8 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
-  // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
-
-  // Run the pre-autonomous function.
-  pre_auton();
+  inertialSensorCalibration();
+  autonomous();
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
